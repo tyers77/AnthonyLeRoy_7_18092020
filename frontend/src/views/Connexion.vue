@@ -22,8 +22,9 @@ export default {
 
 .connexion{
  
-    width: 70%;
-    margin: auto;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
     
 }
 </style>

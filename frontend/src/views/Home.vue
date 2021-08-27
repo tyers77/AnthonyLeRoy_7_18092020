@@ -25,6 +25,11 @@ ul{
   display: flex;
   justify-content: space-evenly;
   list-style: none;
+  padding: 0px;
+  li{
+    margin-right: 2px;
+    margin-left: 2px;
+  }
 }
   button{
   width: 100%;

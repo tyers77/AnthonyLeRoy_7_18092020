@@ -1,7 +1,7 @@
 <template>
     <div class="nav">
         
-        <router-link to="/">Déconnexion</router-link> |
+        <router-link to="/" @click="disconnect()">Déconnexion</router-link> |
         <router-link to ="/about">About</router-link>
         
     </div>
@@ -12,6 +12,12 @@
 export default {
   name: 'navBar2',
 
+methods:{
+  disconnect:function(){
+    localStorage.clear()
+  }
+
+}
 }
 </script>
 

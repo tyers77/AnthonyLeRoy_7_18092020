@@ -15,13 +15,17 @@ import navBar2 from '@/components/navBar2.vue'
 import navUser from '@/components/navUser.vue'
 import actuality from '@/components/actuality.vue'
 
+
 export default {
   name: 'Groupomania',
   components:{
     navBar2,
     navUser,
-    actuality,
+    actuality
     
-  }
+  },
 }
 </script>
+<style lang="scss" scoped>
+
+</style>

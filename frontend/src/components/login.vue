@@ -89,7 +89,9 @@ data:function(){
             console.log("Veuillez vérifier vos informations ")}
             
           else{ 
-            localStorage.setItem('token', JSON.stringify(json.token))
+            console.log(json)
+            localStorage.setItem('token', JSON.stringify(json.token));
+            //localStorage.setItem('id', JSON.stringify(json.userId));
             window.location.replace("http://localhost:8080/#/groupomania"); 
             alert(json.message)}
       /*.then(() => {
@@ -103,33 +105,29 @@ data:function(){
             //console.log("Veuillez vérifier vos informations ")
           //else( console.log('connexion réussi'))
           
-    }
+    },
+        }
 
-  }
+  
 
 
 </script>
 
 
 <style lang="scss" scoped>
-
+  .connexion{
+    width: 100%;
+  }
 
   fieldset{
-     background-color: rgba(156, 154, 154, 0.13);
-    height: 250px;
-  width: 100%;
-    margin: 0;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-     border-radius: 10px;
+  background-color: rgba(156, 154, 154, 0.13);
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
   }
   .formgroup{
       
     display: grid;
-    grid-template-columns: 1fr 5fr;
-    grid-template-rows: 1fr;
     width: 100%;
   }
 label{
@@ -142,7 +140,6 @@ label{
 input{
   box-shadow: 0 2px 5px rgb(245, 244, 244);
   height: 35px;
-  text-align: start;
   border-radius: 10px;
 } 
 .button{

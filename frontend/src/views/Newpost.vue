@@ -1,6 +1,6 @@
 <template>
     <div class="newpost">
-        <navBar id="nav"/>
+        <navBar2 id="nav"/>
         <img alt="Vue logo" src="../assets/logo-home.png" />
         <div id="newpost">
         <newpost/>
@@ -9,13 +9,14 @@
 </template>
 <script>
 import newpost from '@/components/newpost.vue'
-import navBar from '@/components/navBar.vue'
+import navBar2 from '@/components/navBar2.vue'
 
 export default {
   name:"createPost",
   components:{
-      navBar,
+      navBar2,
       newpost,
   }
 }
 </script>
+

@@ -1,3 +1,4 @@
+var db = require('.');
 
 module.exports = (sequelize, DataTypes) => {
 const Post = sequelize.define('Post',{
@@ -6,6 +7,13 @@ const Post = sequelize.define('Post',{
         allowNull:false,
         primaryKey:true,
         autoIncrement:true
+    },
+    UserId: {
+        type: DataTypes.UUID,
+        references: { 
+            model: db.User, 
+            key: 'id' },
+        allowNull: false
     },
     titre:{
         type:DataTypes.TEXT,
@@ -22,8 +30,8 @@ const Post = sequelize.define('Post',{
 
 });
 Post.associate = (models) => {
-    Post.belongsTo(models.User);
-    Post.hasMany(models.Comment);
+    Post.belongsTo(models.User,{ onDelete: "CASCADE", foreignKey: 'UserId', sourceKey: 'id'});
+    Post.hasMany(models.Comment,{ foreignKey: 'UserId', sourceKey: 'id' });
     /*Comment.hasMany(models.RateComment, {
       foreignKey: {
         allowNull: true,

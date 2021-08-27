@@ -8,8 +8,9 @@
     </div>
 </template>
 <script>
+
 import navBar2 from '@/components/navBar2.vue'
-import profil from '@/components/profil'
+import profil from '@/components/profil.vue'
 export default{
     name:'createProfil',
     components:{

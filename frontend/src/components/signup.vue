@@ -110,9 +110,9 @@ this.create2();
             console.log("Veuillez vérifier vos informations ")}
             
           else{ 
-            localStorage.setItem('token', JSON.stringify(newUser.mail))
-            window.location.replace("http://localhost:8080/#/groupomania"); 
-            alert("compte crée, vous êtes connecté ")}
+            //localStorage.setItem('token', JSON.stringify(newUser.pseudo))
+            window.location.replace("http://localhost:8080/#/connexion"); 
+            alert("Compte crée, connectez vous ! ")}
       //const json = await req.json();
       //if (json.error) 
       //console.log("Veuillez renseigner tous les champs")
@@ -125,21 +125,17 @@ this.create2();
 
 
 <style lang="scss" scoped>
+.inscription{
+  width: 100%;
+}
 fieldset {
   background-color: rgba(156, 154, 154, 0.13);
-  height: 250px;
-  width: 100%;
   margin: 0;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   border-radius: 10px;
 }
 .formgroup {
   display: grid;
-  grid-template-columns: 1fr 5fr;
-  grid-template-rows: 1fr;
   width: 100%;
 }
 label {
@@ -152,7 +148,7 @@ label {
 input {
   box-shadow: 0 2px 5px rgb(245, 244, 244);
   height: 35px;
-  text-align: start;
+  margin-bottom: 10px;
   border-radius: 10px;
 }
 .button {

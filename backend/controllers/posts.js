@@ -1,22 +1,19 @@
 const db = require("../models");
-//const Post = db.post;
 const fs = require('fs');
 const jwt = require('../middleware/auth');
 
+
 exports.create = (req, res, next) => {
-  console.log('create..')
-    let userId = req.headers.authorization.split(' ')[1];
-    if (req.body.id != userId) {
+  const file = req.body.file;
+  let userId = jwt.getUserId;
+    if (userId != userId) {
       return res.status(404).json({error:"utilisateur inconnu"})
     }else{
-   
-  //let userId = req.headers.authorization.split(' ')[1];
-
   const newarticle = db.Post.create({
-    userId,
-    titre: req.body.titre,
-    media: `${req.protocol}://${req.get('host')}/images/${req.body.media}`,
-    description: req.body.description,
+    UserId: req.body.id,
+    titre: req.body.title,
+    media:`${req.protocol}://${req.get('host')}/images/${file}`,
+    description: req.body.content,
     validate: 0
   })
   
@@ -26,11 +23,12 @@ exports.create = (req, res, next) => {
     .catch(err => {
       res.status(500).send({ message: err.message || "Error create a new article." });
     });
-  } 
+  }
 };
 
+
 exports.getone = (req, res, next) => {
-  Post.findOne({ where: { id: req.params.id } })
+  db.Post.findOne({ where: { id: req.params.id } })
     .then(
       (post) => {
         res.status(200).json(post)
@@ -42,7 +40,10 @@ exports.getone = (req, res, next) => {
     );
 };
 
+
+
 exports.viewall = (req, res, next) => {
+ 
   db.Post.findAll({
     order: [['id', 'DESC']]
   }).then(
@@ -66,7 +67,7 @@ exports.update = (req, res, next) => {
         fs.unlink("images/" + img, () => {
           Post.update({ description: req.body.description, media: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename, validate: 0 }, { where: { id: req.params.id } })
             .then(() => {
-              res.status(201).json({ message: 'Article updated successfully!' });
+              res.status(201).json({ message: 'post modifié avec succès' });
             })
             .catch(
               (error) => {
