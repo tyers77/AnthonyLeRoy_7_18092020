@@ -1,12 +1,13 @@
 <template>
   <div class="connexion">
     <fieldset>
+      <form @submit.prevent="Valider">
       <div class="formgroup">
         
-              <label for="formNom">Email : </label>
-              <input id="email"
+              <label for="formNom">Pseudo : </label>
+              <input id="pseudo"
                 label="nom"
-                v-model="email"
+                v-model="pseudo"
                 type="text"
                 required
                 class="input-group--focused">
@@ -21,10 +22,11 @@
                 class="input-group--focused">
            
       </div>
+      </form>
     </fieldset>
       <div class="button">
     <router-link to="/"><button>Retour</button></router-link>
-    <button id="validation" @click='checkLog()'>Valider</button>
+    <button id="validation" type="submit" @click='checkLog()'>Valider</button>
   </div>
   </div>
 
@@ -38,7 +40,7 @@ export default {
 data:function(){
         return {
            
-            email:"",
+            pseudo:"",
             password:"",
         }
     },
@@ -47,13 +49,13 @@ data:function(){
 
       checkLog:function(){
       console.log('login')
-        const regexEmail = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
+        //const pseudo = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
         let checkMessage = '';
-      if(regexEmail.test(this.email) == false || this.email ==''){
-        checkMessage = checkMessage + "Veuillez renseigner votre email"
+      if(this.pseudo ==''){
+        checkMessage = checkMessage + "Veuillez renseigner votre pseudo"
       }
       else {
-          console.log('email vérifié')
+          console.log('pseudo vérifié')
       }
       if(this.password == ''){
         checkMessage = checkMessage + 'Veuillez renseigner votre mot de passe'
@@ -68,10 +70,10 @@ data:function(){
       }
       },
     login2: async function(){
-    const mail = document.getElementById("email").value;
+    const pseudo = document.getElementById("pseudo").value;
     const password = document.getElementById("password").value;
     const log = {
-        mail,
+        pseudo,
         password,
         
     }
@@ -89,24 +91,13 @@ data:function(){
             console.log("Veuillez vérifier vos informations ")}
             
           else{ 
-            console.log(json)
-            localStorage.setItem('token', JSON.stringify(json.token));
-            //localStorage.setItem('id', JSON.stringify(json.userId));
-            window.location.replace("http://localhost:8080/#/groupomania"); 
-            alert(json.message)}
-      /*.then(() => {
-          
-            localStorage.setItem('token', JSON.stringify(log.mail));*/
             
-      }
-      //.catch(error => console.error({ error }));
-         // const json = await req.json();
-          //if(json.error)
-            //console.log("Veuillez vérifier vos informations ")
-          //else( console.log('connexion réussi'))
-          
+            localStorage.setItem('token', JSON.stringify(json.token));
+            window.location.replace("http://localhost:8080/#/groupomania");
+            alert(json.message)}    
+      }  
     },
-        }
+  }
 
   
 

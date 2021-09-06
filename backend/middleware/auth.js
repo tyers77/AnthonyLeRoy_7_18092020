@@ -26,18 +26,21 @@ const JWT_SIGN_SECRET = "OPENCLASSROOMS_P7_Antho";
  */
 exports.isAuth = (req, res, next) => {
     try {
-      const token = req.headers.authorization.split(' ')[1];
+      const token = req.headers.authorization.split(" ")[1];
       const decodedToken = jwt.verify(token, JWT_SIGN_SECRET);
       const userId = decodedToken.userId;
       
       if (req.body.userId && req.body.userId != userId) {
-        
+        console.log("ERREURRRRRRR")
         return res.status(401).json({ error: "Utilisateur non identifié" });
       }
       next();
       
     } catch (error) {
-      return res.status(401).json({ error: "Authentification invalide" });
+      res.writeHead(404, {'Content-Type': 'text/plain'});                    // <- redirect
+res.write("Looked everywhere, but couldn't find that page at all!\n"); // <- content!
+res.end();
+      //return res.status(401).json({ error: error.message + " Authentification invalide" });
     }
   };
   exports.getUserId = (req)=>{
@@ -50,4 +53,4 @@ exports.isAuth = (req, res, next) => {
 
 
 
-  /**middleware permettant l'authentification du token et de l userid envoyé par le frontend */
+ 

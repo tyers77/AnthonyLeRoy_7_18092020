@@ -27,15 +27,16 @@ const User = sequelize.define('User',{
         allowNull: true
     },
 
-    admin:{
+    isAdmin:{
         type:DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
 
 });
 User.associate = (models) => {
-    User.hasMany(models.Comment,{ foreignKey: 'UserId', sourceKey: 'id' });
-    User.hasMany(models.Post,{ foreignKey: 'UserId', sourceKey: 'id' });
+    User.hasMany(models.Comment);
+    User.hasMany(models.Post);
     /*User.hasMany(models.RateComment, {
       foreignKey: {
         allowNull: true,

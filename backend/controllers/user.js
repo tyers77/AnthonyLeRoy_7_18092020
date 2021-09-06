@@ -1,9 +1,10 @@
 const db = require('../models')
 const bcrypt = require('bcrypt');
 const jwt = require('../middleware/auth');
-
+const { Op } = require("sequelize");
 
 exports.create = (req, res,next) => {
+let newuser;
 console.log("tentative de creation " + req.body.mail)
 db.User.findOne({
     where: { email: req.body.mail },
@@ -15,14 +16,14 @@ db.User.findOne({
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
         console.log("req.body.email "+ req.body.mail ) 
-        const newuser = db.User.create ({
+        newuser = db.User.create ({
           email: req.body.mail,
           pseudo: req.body.pseudo,
           password: hash,
           admin: 0
         })
         .then(newuser => {
-          res.status(201).json({message: "Utilisateur créé avec l'id " + newuser.userId});
+          res.status(201).json({message: "Utilisateur " + newuser.pseudo});
         })
         .catch(err => {
           res.status(500).send({
@@ -36,50 +37,44 @@ db.User.findOne({
  
   // Login user
   exports.login = async (req, res, next) => {
-    
+    let user ;
     try{
-      const mail = req.body.mail;
+      const pseudo = req.body.pseudo;
       const password = req.body.password;
-      if(!mail || !password){
+      if(!pseudo || !password){
         return res.status(400).json({error:"information manquantes"})
       }
-      const user = await db.User.findOne({ where: { email: mail }})
+      user = await db.User.findOne({ where: { pseudo: pseudo }})
       if(!user){
         return res.status(404).json({error:"utilisateur inconnu"})
       }
-      const token = await jwt.generateTokenForUser(user);
-      res.status(201).json({
-      token,
-      message:"Bonjour vous êtes connecté",
-
-      })
+      const token = jwt.generateTokenForUser(user);
+      return res.status(200).json({user, token, message: "Bonjour " + pseudo });
       
     }
    
-    catch(error){return res.status(500).json({error : "erreur token non gaineré"})}
+    catch(error){return res.status(500).json({error :error.message})}
   }
-  /*exports.searchUser = async (req, res, next) => {
-    console.log("hello");
-   await db.User.findOne({ where: {  id: req.params.id } }) 
-    .then (
-      (user) => {res.status(200).json(JSON.stringify(user))}
-    )
-    .catch (
-      (error) => {res.status(404).json({error})}
-    )
-  }
-;*/
+
 
 exports.searchUser =  (req, res, next) => {
-  db.User.findOne({ id: req.headers.authorization.split(' ')[1]})
-  .then(user => res.status(200).json(user))// code 200 ok, on recupère les données de l'utilisateur en reponse
-  .catch(error => res.status(400).json({error:"pas trouvé"}));//mauvaise requête dû a un user qui n'éxiste pas
+  let id =  jwt.getUserId(req);
+  db.User.findOne({
+    attributes: ["pseudo", "email", "avatar"],
+    where: {
+      id: id
+    }
+  })
+  .then(user => res.status(200).json({user}))
+  .catch(error => res.status(400).json({error :error.message}));
 };
+
+
 
 // Deleted user
 exports.delete = (req, res, next) => {
   let userId = req.params.id;
-  db.User.findOne({ id: userId })
+  db.User.findOne( id == userId )
     .then(user => {
       const filename = user.imageUrl.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {

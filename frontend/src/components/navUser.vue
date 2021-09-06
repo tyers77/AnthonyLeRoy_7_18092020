@@ -1,8 +1,8 @@
 <template>
     <div class="navuser">
         <ul>
-        <router-link to="/Newpost"><li> Nouveau Post</li> </router-link>
-        <router-link to="/Profil" @click="getUser()"><li>Profil</li> </router-link>
+        <router-link to="/newpost"><li> Nouveau Post</li> </router-link>
+        <router-link to="/profil"><li>Profil</li> </router-link>
         </ul>
     </div>
 
@@ -16,15 +16,7 @@ export default {
   methods:{
 
 
-    getUser: function(){
-        let url = "http://localhost:3000/api/user/get"
-        fetch(url)
-        .then(response => response.json())
-        .then(response => sessionStorage.setItem("user", JSON.stringify(response)))
-        .catch(error => console.error("erreur" + error))
-   
-        
-        }
+
     
     /*lastProfil: function(){
         let lastprofil = JSON.parse(localStorage.getItem("user"));

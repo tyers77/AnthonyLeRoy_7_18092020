@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-let url = "http://localhost:3000/api/user/delete/:id";
+
 export default {
     name:'profil',
      data: function () {
@@ -60,14 +60,30 @@ export default {
       password: "",
     };
 },
-
+ mounted() {
+    this.getUser();
+  },
 methods:{
   
-  deleteProfil : function() {
-    fetch(url)
+     getUser: function () {
+      let token = JSON.parse(localStorage.getItem("token"));
+      let url = "http://localhost:3000/api/user/get/:id";
+      fetch(url, {
+        method: "get",
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((response) => response.json())
+        .catch((error) => {console.error("erreur" + error)
+        window.location.replace("http://localhost:8080/#/connexion");
+        });
+        
+    },
   }
 }
-}
+
 </script>
 <style lang="scss" scoped>
 .profil{

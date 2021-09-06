@@ -21,9 +21,9 @@ export default {
   components:{
     navBar2,
     navUser,
-    actuality
-    
+    actuality 
   },
+ 
 }
 </script>
 <style lang="scss" scoped>

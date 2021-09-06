@@ -4,56 +4,58 @@
         <fieldset>
           
             <!--formulaire du post-->
-            <div class="formpost">
+            <form class="formpost" enctype="multipart/form-data" >
                 
-                <label for="formtitle">
+                <label for="title">
                         Titre :
                 </label>
                  <input
-          id="titre"
-          label="titre"
-          v-model="titre"
+          id="title"
+          label="title"
+          v-model="title"
           type="text"
           required
           class="input-group--focused"
         />
-        <label for="media">
+        <label for="imageUrl">
             Image : 
             </label>
           <input 
-          id="media"
-          label="media"
+          
+          id="imageUrl"
+          label="imageUrl"
           ref="file"
-          type="file" 
-          accept=".jpg, .jpeg, .png" 
+          type="file"
+          accept=".jpg,.jpeg,.png" 
           
           />
                <label for="formtext">
                         Commentaire :
                 </label>
                  <input
-          id="description"
-          label="description"
-          v-model="description"
+          id="text"
+          label="text"
+          v-model="text"
           type="text"
           required
           class="input-group--focused"
         />
-            </div>
+            </form>
         </fieldset>
         <router-link to="/groupomania"><button>Retour</button></router-link>
         <button @click="createPost()">Poster</button>
     </div>
 </template>
 <script>
-let url = "http://localhost:3000/api/post/create"
+let url = "http://localhost:3000/api/post/create";
+
 export default {
     name:"newpost",
     data: function (){
         return {
-            titre:"",
-            media:null,
-            description:""
+            title:"",
+            imageUrl:null,
+            text:""
         }
     },
    
@@ -61,39 +63,32 @@ export default {
       
         //fetch post des posts
     createPost: async function () {
-      let token = localStorage.getItem("token");
-      const titre = document.getElementById("titre").value;
-      const media = document.getElementById("media");
-      const description = document.getElementById("description").value;
+      let token = JSON.parse(localStorage.getItem('token'));
+      const title = document.getElementById("title").value;
+      const imageUrl = document.getElementById("imageUrl");
+      const text = document.getElementById("text").value;
+     const imgUrl = imageUrl.files[0];
+      console.log(imgUrl);
       const formData = new FormData();
-    if(media !== null){
-      console.log("hi")
-      const file = media.files[0];
-      formData.append("media",file);
-      formData.append("title",titre)
-      formData.append("content",description)
-      
+    if(imageUrl){
+      const file = imageUrl.files[0];
+      formData.append("image",file);
+      formData.append("title",title)
+      formData.append("text",text)
     }else{
-    formData.append("title",titre)
-    formData.append("content",description)
+    formData.append("title",title)
+    formData.append("text",text)
     }
-      /*const newPost = {
-        titre,
-        //media,
-        description,
-      };*/
-      console.log(formData)
       const req = await fetch(url, {
         method: "post",
         headers: {
-          "content-type": "application/json",
-           Authorization: "Bearer" + " " +  token,
+           Authorization: "Bearer " + token,
         },
         body: formData,
       })
       const json = await req.json();
           if(json.error){
-            alert('veuillez vérifier vos informations')
+            alert('veuillez vérifier vos informations',json.error)
             console.log("Veuillez vérifier vos informations ")}
             
           else{ 
@@ -113,9 +108,7 @@ export default {
   margin-left: 5%;
   margin-right: 5%;
 }
-#newpost{
-  width: 100%;
-}
+
 fieldset {
   background-color: rgba(156, 154, 154, 0.13);
   
@@ -140,10 +133,10 @@ input {
   margin-bottom: 10px;
   border-radius: 10px;
   }
-    #description{
+    #text{
       height: 200px;  
 }
-#media{
+#imageUrl{
   padding-left: 7px;
 }
 

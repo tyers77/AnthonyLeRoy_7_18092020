@@ -2,32 +2,50 @@ const db = require("../models");
 const fs = require('fs');
 const jwt = require('../middleware/auth');
 
-
-exports.create = (req, res, next) => {
-  const file = req.body.file;
-  let userId = jwt.getUserId;
-    if (userId != userId) {
-      return res.status(404).json({error:"utilisateur inconnu"})
-    }else{
-  const newarticle = db.Post.create({
-    UserId: req.body.id,
-    titre: req.body.title,
-    media:`${req.protocol}://${req.get('host')}/images/${file}`,
-    description: req.body.content,
-    validate: 0
-  })
-  
-    .then(newarticle => {
-      res.status(201).json({message:"Post crée avec succès"});
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message || "Error create a new article." });
-    });
+function getDatePost() {
+  const date = new Date();
+  let day = date.getDate().toString();
+  if (day.length == 1) {
+    day = "0" + day;
   }
-};
+  let month = (date.getMonth() + 1).toString();
+  if (month.length == 1) {
+    month = "0" + month;
+  }
+  const year = date.getFullYear()
+  const today = day + "-" + month + "-" + year;
+  return today;
+}
 
 
-exports.getone = (req, res, next) => {
+exports.createPost = async (req, res, next) => {
+
+  const file = req.file;
+  let UserId = jwt.getUserId(req);
+  try {
+    if (!UserId) {
+      return res.status(404).json({ error: "utilisateur inconnu" })
+    } else {
+      console.log("tentative de creation")
+      const post = await db.Post.create({
+        dateFr: getDatePost(),
+        title: req.body.title,
+        text: req.body.text,
+        UserId,
+        imageUrl: file ? `${req.protocol}://${req.get('host')}/images/${file.filename}` : null //file ? demande si il y a un file et on répond oui l 'url et non : null
+      })
+      console.log(file, "image")
+      res.status(201).json({ message: "Post crée avec succès" });
+
+    }
+  }
+  catch (error) {
+    return res.status(500).json({ error: error.message });
+  };
+}
+  ;
+
+exports.getOne = (req, res, next) => {
   db.Post.findOne({ where: { id: req.params.id } })
     .then(
       (post) => {
@@ -40,19 +58,18 @@ exports.getone = (req, res, next) => {
     );
 };
 
-
-
 exports.viewall = (req, res, next) => {
- 
+  //let id =  jwt.getUserId(req);
   db.Post.findAll({
-    order: [['id', 'DESC']]
+    order: [['id', 'DESC']], include: [{ model: db.User, attributes: ["pseudo"] }]
+
   }).then(
     (post) => {
       res.status(200).json(post);
     }
   ).catch(
     (error) => {
-      res.status(404).json({ error: error });
+      res.status(404).json({ error: error.message });
     }
   );
 };
@@ -63,9 +80,9 @@ exports.update = (req, res, next) => {
   db.Post.findOne({ where: { id: req.params.id } })
     .then(post => {
       if (post.id == userId) {
-        let img = post.media.split('/images/')[1];
+        let img = post.imageUrl.split('/images/')[1];
         fs.unlink("images/" + img, () => {
-          Post.update({ description: req.body.description, media: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename, validate: 0 }, { where: { id: req.params.id } })
+          Post.update({ title: req.body.title, text: req.body.text, imageUrl: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename }, { where: { id: req.params.id } })
             .then(() => {
               res.status(201).json({ message: 'post modifié avec succès' });
             })
@@ -85,10 +102,9 @@ exports.update = (req, res, next) => {
 exports.delete = (req, res, next) => {
   db.Post.findOne({ where: { id: req.params.id } })
     .then(post => {
-      let userId = req.headers.authorization.split(' ')[3];
-      let profil_user = req.headers.authorization.split(' ')[2];
-      let img = post.media.split('/images/')[1];
-      if (post.profil_id == userId) {
+      let userId = req.headers.authorization.split(' ')[1];
+      let img = post.imageUrl.split('/images/')[1];
+      if (post.id == userId) {
         if (!post) {
           return res.status(404).json({ error: 'Post not found.' });
         }

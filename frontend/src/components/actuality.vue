@@ -1,64 +1,74 @@
 <template>
-    <div class="actuality">
-        <h2>Fil d'actualités</h2>
-        <section id="feel">
-            
-        </section>
-    </div>
+  <div id="actuality">
+    <h2>Fil d'actualités</h2>
+    <section id="feel" @click="viewOnePost()"></section>
+  </div>
 </template>
 <script>
 export default {
-    name: 'actuality',
-    
+  name: "actuality",
 
-mounted() {
-    this.getPost();//lance getpost() a l affichage de la page
-    this.getUser();
-    },
-    methods:{
-
- createPostHtml : function (post) {
-    console.log(post)
-    const articleParent = document.getElementById('feel');
-    post.forEach((element) => {        
-        let post = `<article class="post">
-        <h2 class="titre" >${element.titre}</h2>
-        <p class="postdate">${element.createdAt}</p>
-        <img class="media" alt="photo du post" src="http://localhost:3000/images/">
-        <p class="description">${element.description}</p>
+  mounted() {
+    this.getPost(); //lance getpost() a l affichage de la page
+  
+  },
+  methods: {
+    createPostHtml: function (post) {
+      const articleParent = document.getElementById("feel");
+      post.forEach((element) => {
+        let post = `<article class="post" 
+        style=
+        "background-color: rgba(156, 154, 154, 0.13);
+        border-radius: 10px;
+                ">
+            <h2 class="titre" style="color: #2c3e50;">${element.title}</h2>
+                <p class="postdate" style="font-weight: bold;
+    color: #2c3e50;">${element.dateFr}</p>
+                    <img class="media" alt="photo du post" src="${element.imageUrl}" style="width: 50%;border-radius: 10px;">
+                        <p class="description" style="font-weight: bold;
+    color: #2c3e50;">${element.text}</p>
         </article>`;
-        articleParent.insertAdjacentHTML('beforeend',post);
-    });
-},
+        articleParent.insertAdjacentHTML("beforeend", post);
+      });
+    },
 
-        getPost: function(){
-            let url = "http://localhost:3000/api/post/get"
-            fetch(url)
-        .then(response => response.json())/*ensuite la réponse est une reponse json faire "réponse est une réponse json"*/
-        .then(json => this.createPostHtml(json))/*ensuite faire de la réponse createProductHtml*/
-        .catch(error => console.error("erreur" + error))
-            } ,
+    getPost: function () {
+      let url = "http://localhost:3000/api/post/get";
+      fetch(url)
+        .then((response) =>
+          response.json()
+        )
+        .then((json) => {
+          this.createPostHtml(json);
+          console.log(json);
+        }) 
+        .catch((error) => console.error("erreur" + error));
+    },
 
-            getUser: function() {
-            let token = JSON.parse(localStorage.getItem('token'));
-            let url = "http://localhost:3000/api/user/get/:id"
-            fetch(url,{
-                method : 'get',
-        headers: {
-          "content-type": "application/json",
-           Authorization: "Bearer" + " "+ token,
-        },
-        
-          })
-        .then(response => response.json())/*ensuite la réponse est une reponse json faire "réponse est une réponse json"*/
-        .then(response => localStorage.setItem('utilisateur', JSON.stringify(response)))
-        .catch(error => console.error("erreur" + error))
-            } ,
-        }
-    }
+  
 
+    viewOnePost: function () {
+      //let token = JSON.parse(localStorage.getItem('token'));
+      // let url = "http://localhost:3000/api/post/get/:id";
+      //fetch(url)
+      //.then(response => response.json())
+      //.then(json => {
+
+      //this.createCommentHtml(json);
+      window.location.replace("http://localhost:8080/#/comments");
+      //console.log(json)
+      //})
+      //.catch(error => console.error("erreur" + error))
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
+#feel {
+  .titre {
+    color: yellow;
+  }
+}
 button {
   width: 200px;
   height: 30px;

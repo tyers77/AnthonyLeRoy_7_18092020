@@ -14,7 +14,8 @@ export default {
 
 methods:{
   disconnect:function(){
-    localStorage.clear()
+    localStorage.clear(),
+    sessionStorage.removeItem("utilisateur");
   }
 
 }
