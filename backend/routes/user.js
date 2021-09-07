@@ -7,7 +7,7 @@ const auth = require("../middleware/auth").isAuth;
 
 router.post("/signup", userCtrl.create);//route d envoi des infos connexion de l utilisateur pour la creation
 router.post("/login", userCtrl.login);// route d envoi des infos connexion de l utilisateur pour la connexion 
-router.delete("/delete/:id",auth, userCtrl.delete);//supprime le compte utilisateur
+router.delete("/delete/:id",auth,multer, userCtrl.delete);//supprime le compte utilisateur
 router.get("/get/:id",auth , multer, userCtrl.searchUser);//recupère le compte de l utilisateur
 
 module.exports = router;

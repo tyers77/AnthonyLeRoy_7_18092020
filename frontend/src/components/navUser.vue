@@ -15,14 +15,6 @@ export default {
   name: 'navUser',
   methods:{
 
-
-
-    
-    /*lastProfil: function(){
-        let lastprofil = JSON.parse(localStorage.getItem("user"));
-        let lastpseudo = document.getElementById("lastpseudo"); 
-        lastpseudo.innerHTML = lastprofil.req.body.pseudo ;
-    }*/
 }
 }
 </script>

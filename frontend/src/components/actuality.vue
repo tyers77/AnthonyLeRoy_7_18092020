@@ -1,18 +1,20 @@
 <template>
   <div id="actuality">
     <h2>Fil d'actualités</h2>
-    <section id="feel" @click="viewOnePost()"></section>
+    <section id="feel" @click="onePost()"></section>
   </div>
 </template>
 <script>
+//import {userAuth} from "@/helpers/auth.js"
 export default {
   name: "actuality",
 
   mounted() {
     this.getPost(); //lance getpost() a l affichage de la page
-  
+    //userAuth();
   },
   methods: {
+
     createPostHtml: function (post) {
       const articleParent = document.getElementById("feel");
       post.forEach((element) => {
@@ -26,15 +28,21 @@ export default {
     color: #2c3e50;">${element.dateFr}</p>
                     <img class="media" alt="photo du post" src="${element.imageUrl}" style="width: 50%;border-radius: 10px;">
                         <p class="description" style="font-weight: bold;
-    color: #2c3e50;">${element.text}</p>
+    color: #2c3e50;">${element.text}</p><a href="http://localhost:8080/#/comments" + ${element.id}>voir</a>
         </article>`;
         articleParent.insertAdjacentHTML("beforeend", post);
       });
     },
 
     getPost: function () {
+      let token = JSON.parse(localStorage.getItem('token'));
       let url = "http://localhost:3000/api/post/get";
-      fetch(url)
+      fetch(url,{
+        method:'get',
+              headers: {
+                 Authorization: "Bearer " + token,
+              },
+      })
         .then((response) =>
           response.json()
         )
@@ -47,21 +55,10 @@ export default {
 
   
 
-    viewOnePost: function () {
-      //let token = JSON.parse(localStorage.getItem('token'));
-      // let url = "http://localhost:3000/api/post/get/:id";
-      //fetch(url)
-      //.then(response => response.json())
-      //.then(json => {
-
-      //this.createCommentHtml(json);
-      window.location.replace("http://localhost:8080/#/comments");
-      //console.log(json)
-      //})
-      //.catch(error => console.error("erreur" + error))
-    },
-  },
-};
+    onePost: function () {
+            //window.location.replace("http://localhost:8080/#/comments");
+             },
+}};
 </script>
 <style lang="scss" scoped>
 #feel {

@@ -9,16 +9,16 @@
 </template>
 
 <script>
+
 export default {
   name: 'navBar2',
-
-methods:{
-  disconnect:function(){
+ 
+  methods:{
+    disconnect:function(){
     localStorage.clear(),
     sessionStorage.removeItem("utilisateur");
   }
-
-}
+  }
 }
 </script>
 

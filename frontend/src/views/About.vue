@@ -1,6 +1,9 @@
 <template>
   <div class="about">
-     <navBar id="nav"/>
+     <div class="nav">
+        <router-link to ="/">Home</router-link> |
+        <router-link to="/groupomania" >Retour</router-link> 
+    </div>
     <img alt="Vue logo" src="../assets/logo-home.png" />
     <h1>Charte Utilisateur</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Boerohoev doe dami, leh foh hoeditan cusabyqua quobet, bebitubi, beque bebiqu. Lada fi ci faf bydedema laced mo, quu medenid jebob. Dob bad faloe dudelada vedi hosaled mol lu boeveryd, de dimide sadoeh. Dequone rama moero bimenoemedoe pibe dido doefo, delimoe faf ri dubifa.<br />
@@ -31,11 +34,8 @@ Keep Calm T-Shirt Maker - Soulay Cool T-Shirt Designs</p>
   </div>
 </template>
 <script>
-import navBar from '@/components/navBar.vue'
+
 export default {
   name: 'About',
-  components:{
-    navBar,
   }
-}
 </script>

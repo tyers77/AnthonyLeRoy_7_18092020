@@ -11,11 +11,24 @@
 </template>
 <script>
 import comments from "@/components/comments.vue"
+import {userAuth}  from '@/helpers/auth.js'
+
 export default {
   name: 'viewComments',
    components:{
     comments
   },
+   mounted() {
+    
+    userAuth();
+    
+  },
+  methods:{
+    disconnect:function(){
+    localStorage.clear(),
+    sessionStorage.removeItem("utilisateur");
+  }
+}
 }
 </script>
 <style lang="scss" scoped>

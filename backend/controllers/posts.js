@@ -59,7 +59,10 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.viewall = (req, res, next) => {
-  //let id =  jwt.getUserId(req);
+  let id =  jwt.getUserId(req);
+  if (!id) {
+    return res.redirect("/connexion")//status(404).json({ error: "utilisateur inconnu" })
+  }
   db.Post.findAll({
     order: [['id', 'DESC']], include: [{ model: db.User, attributes: ["pseudo"] }]
 

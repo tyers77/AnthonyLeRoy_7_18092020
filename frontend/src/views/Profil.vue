@@ -11,11 +11,16 @@
 
 import navBar2 from '@/components/navBar2.vue'
 import profil from '@/components/profil.vue'
+import {userAuth} from '@/helpers/auth.js'
 export default{
     name:'createProfil',
     components:{
         navBar2,
         profil
-    }
+    },
+    mounted() {
+    
+    userAuth();
+  },
 }
 </script>

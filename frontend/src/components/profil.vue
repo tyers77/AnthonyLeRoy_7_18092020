@@ -44,8 +44,8 @@
       </div>
     </fieldset></div>
         <router-link to="/groupomania"><button>Retour</button></router-link>
-        <button>Modifier</button>
-        <router-link to="/"><button>Supprimer</button></router-link>
+        <button class="update" >Modifier</button>
+        <router-link to="/"><button @click="deleteProfil">Supprimer</button></router-link>
     </div>
 </template>
 <script>
@@ -64,6 +64,10 @@ export default {
     this.getUser();
   },
 methods:{
+
+  createUserProfil:function(){
+
+  },
   
      getUser: function () {
       let token = JSON.parse(localStorage.getItem("token"));
@@ -77,10 +81,20 @@ methods:{
       })
         .then((response) => response.json())
         .catch((error) => {console.error("erreur" + error)
-        window.location.replace("http://localhost:8080/#/connexion");
         });
         
     },
+    deleteProfil: function(){
+      let token = JSON.parse(localStorage.getItem("token"));
+      let url = "http://localhost:3000/api/user/delete/:id";
+      fetch(url, {
+        method: "delete",
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+    }
   }
 }
 

@@ -14,7 +14,7 @@
 import navBar2 from '@/components/navBar2.vue'
 import navUser from '@/components/navUser.vue'
 import actuality from '@/components/actuality.vue'
-
+import {userAuth} from "@/helpers/auth.js"
 
 export default {
   name: 'Groupomania',
@@ -23,7 +23,10 @@ export default {
     navUser,
     actuality 
   },
- 
+  mounted() {
+    
+   userAuth();
+  },
 }
 </script>
 <style lang="scss" scoped>

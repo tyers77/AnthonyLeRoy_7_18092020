@@ -48,7 +48,7 @@
 </template>
 <script>
 let url = "http://localhost:3000/api/post/create";
-
+//import { authHeader } from '@/helpers/auth.js';
 export default {
     name:"newpost",
     data: function (){

@@ -12,11 +12,23 @@
 </template>
 <script>
 import addComment from '@/components/addComment.vue'
+import {userAuth} from '@/helpers/auth.js'
 
 export default {
   name:"createComment",
   components:{
       addComment,
+  },
+   mounted() {
+    
+    userAuth();
+  
+  },
+  methods:{
+      disconnect:function(){
+    localStorage.clear(),
+    sessionStorage.removeItem("utilisateur");
   }
+}
 }
 </script>

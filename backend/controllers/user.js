@@ -49,7 +49,7 @@ db.User.findOne({
         return res.status(404).json({error:"utilisateur inconnu"})
       }
       const token = jwt.generateTokenForUser(user);
-      return res.status(200).json({user, token, message: "Bonjour " + pseudo });
+      return res.status(200).json({token, message: "Bonjour " + pseudo });
       
     }
    
@@ -73,17 +73,17 @@ exports.searchUser =  (req, res, next) => {
 
 // Deleted user
 exports.delete = (req, res, next) => {
-  let userId = req.params.id;
-  db.User.findOne( id == userId )
+  let userId =  jwt.getUserId(req);
+  db.User.findOne( {where:{id:userId}} )
     .then(user => {
-      const filename = user.imageUrl.split('/images/')[1];
+      const filename = user.avatar.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
-        db.User.deleteOne({ id: userId })
+        db.User.deleteOne({where:{id:userId}})
           .then(() => res.status(200).json({ message: "compte supprimée" }))
           .catch(error => res.status(400).json({ message: "compte non supprimée" }));
       });
-    })
-    .catch(error => res.status(500).json({ error }));
+   })
+    .catch(error => res.status(501).json({ error : error.message}));
 };
 
 

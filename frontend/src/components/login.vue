@@ -1,7 +1,7 @@
 <template>
   <div class="connexion">
     <fieldset>
-      <form @submit.prevent="Valider">
+      <form >
       <div class="formgroup">
         
               <label for="formNom">Pseudo : </label>
@@ -32,9 +32,7 @@
 
 </template>
 <script>
-let url = 'http://localhost:3000/api/user/login';
-
-
+let url = 'http://localhost:3000/api/user/login';  
 export default {
   name: 'loginAccount',
 data:function(){
@@ -44,12 +42,9 @@ data:function(){
             password:"",
         }
     },
-       
    methods: {
-
       checkLog:function(){
       console.log('login')
-        //const pseudo = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
         let checkMessage = '';
       if(this.pseudo ==''){
         checkMessage = checkMessage + "Veuillez renseigner votre pseudo"
@@ -69,6 +64,7 @@ data:function(){
         this.login2()
       }
       },
+
     login2: async function(){
     const pseudo = document.getElementById("pseudo").value;
     const password = document.getElementById("password").value;
@@ -77,7 +73,6 @@ data:function(){
         password,
         
     }
-      
       const req = await fetch(url,{
         method:'post',
               headers:{
@@ -92,16 +87,14 @@ data:function(){
             
           else{ 
             
-            localStorage.setItem('token', JSON.stringify(json.token));
+            localStorage.setItem("token", JSON.stringify(json.token));
             window.location.replace("http://localhost:8080/#/groupomania");
-            alert(json.message)}    
-      }  
+            alert(json.message)}
+          
+      } 
+      
     },
   }
-
-  
-
-
 </script>
 
 
