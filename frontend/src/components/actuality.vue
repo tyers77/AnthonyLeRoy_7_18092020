@@ -1,17 +1,17 @@
 <template>
   <div id="actuality">
     <h2>Fil d'actualités</h2>
-    <section id="feel" @click="onePost()"></section>
+    <section id="feel"></section>
   </div>
 </template>
 <script>
-//import {userAuth} from "@/helpers/auth.js"
+
 export default {
   name: "actuality",
 
   mounted() {
     this.getPost(); //lance getpost() a l affichage de la page
-    //userAuth();
+   
   },
   methods: {
 
@@ -21,16 +21,20 @@ export default {
         let post = `<article class="post" 
         style=
         "background-color: rgba(156, 154, 154, 0.13);
-        border-radius: 10px;
+        border-radius: 10px;padding-bottom:15px;
                 ">
             <h2 class="titre" style="color: #2c3e50;">${element.title}</h2>
                 <p class="postdate" style="font-weight: bold;
     color: #2c3e50;">${element.dateFr}</p>
                     <img class="media" alt="photo du post" src="${element.imageUrl}" style="width: 50%;border-radius: 10px;">
                         <p class="description" style="font-weight: bold;
-    color: #2c3e50;">${element.text}</p><a href="http://localhost:8080/#/comments" + ${element.id}>voir</a>
+    color: #2c3e50;">${element.text}</p><a href="http://localhost:8080/#/comments?id=${element.id}" style=
+        "background-color:#cbd0d4;
+        border-radius: 10px; padding:5px;text-decoration:none;
+                ">Commentaires</a>
         </article>`;
         articleParent.insertAdjacentHTML("beforeend", post);
+        
       });
     },
 
@@ -52,12 +56,6 @@ export default {
         }) 
         .catch((error) => console.error("erreur" + error));
     },
-
-  
-
-    onePost: function () {
-            //window.location.replace("http://localhost:8080/#/comments");
-             },
 }};
 </script>
 <style lang="scss" scoped>
@@ -72,7 +70,7 @@ button {
   margin-top: 15px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: #2c3e50;
+  background-color:#2c3e50;
   color: #fff;
   font-size: 1.2em;
   border-radius: 10px;

@@ -21,6 +21,7 @@
           required
           class="input-group--focused"
         />
+       
         <label for="formNom">Password : </label>
         <input
           id="password"
@@ -53,6 +54,7 @@ export default {
       email: "",
       pseudo: "",
       password: "",
+      //avatar:null,
     };
   },
 
@@ -110,14 +112,9 @@ this.create2();
             console.log("Veuillez vérifier vos informations ")}
             
           else{ 
-            //localStorage.setItem('token', JSON.stringify(newUser.pseudo))
             window.location.replace("http://localhost:8080/#/connexion"); 
             alert("Compte crée, connectez vous ! ")}
-      //const json = await req.json();
-      //if (json.error) 
-      //console.log("Veuillez renseigner tous les champs")
-      //else console.log("utilisateur crée avec succès")
-      //window.location.assign("Groupomania.vue");
+      
     }
   }  
 }

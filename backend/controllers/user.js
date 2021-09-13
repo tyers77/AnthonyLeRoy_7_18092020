@@ -4,6 +4,7 @@ const jwt = require('../middleware/auth');
 const { Op } = require("sequelize");
 
 exports.create = (req, res,next) => {
+//const file = req.file;
 let newuser;
 console.log("tentative de creation " + req.body.mail)
 db.User.findOne({
@@ -20,6 +21,7 @@ db.User.findOne({
           email: req.body.mail,
           pseudo: req.body.pseudo,
           password: hash,
+         // avatar: file ? `${req.protocol}://${req.get('host')}/images/${file.filename}` : null,
           admin: 0
         })
         .then(newuser => {
@@ -65,7 +67,7 @@ exports.searchUser =  (req, res, next) => {
       id: id
     }
   })
-  .then(user => res.status(200).json({user}))
+  .then(user => res.status(200).json([user]))
   .catch(error => res.status(400).json({error :error.message}));
 };
 
@@ -75,17 +77,8 @@ exports.searchUser =  (req, res, next) => {
 exports.delete = (req, res, next) => {
   let userId =  jwt.getUserId(req);
   db.User.findOne( {where:{id:userId}} )
-    .then(user => {
-      const filename = user.avatar.split('/images/')[1];
-      fs.unlink(`images/${filename}`, () => {
-        db.User.deleteOne({where:{id:userId}})
+        db.User.destroy({where:{id:userId}})
           .then(() => res.status(200).json({ message: "compte supprimée" }))
           .catch(error => res.status(400).json({ message: "compte non supprimée" }));
-      });
-   })
-    .catch(error => res.status(501).json({ error : error.message}));
 };
-
-
-
 

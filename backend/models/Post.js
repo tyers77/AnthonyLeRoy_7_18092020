@@ -1,4 +1,3 @@
-//var db = require('.');
 
 module.exports = (sequelize, DataTypes) => {
 const Post = sequelize.define('Post',{
@@ -28,15 +27,22 @@ const Post = sequelize.define('Post',{
 
 });
 Post.associate = (models) => {
-    Post.hasMany(models.Comment);
-    Post.belongsTo(models.User, {
+    Post.belongsTo(models.User,
+    {
       foreignKey: {
         allowNull: true,
+      },
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
+    });
+    Post.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: false,
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-};
+  };
 
-    return Post;
-}
+  return Post;
+};

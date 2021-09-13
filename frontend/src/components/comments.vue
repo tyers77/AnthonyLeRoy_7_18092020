@@ -8,20 +8,20 @@
     </div>
 </template>
 <script>
-
+let token = JSON.parse(localStorage.getItem('token'));
 export default {
     name: 'comments',
 
 mounted() {
-    this.viewOnePost(); //lance getpost() a l affichage de la page
+    this.viewOnePost(); 
     
   },
 methods:{
 
-createPostHtml: function (post) {
+createPostHtml: function (element) {
+  console.log(element)
       const articleParent = document.getElementById("post");
-      post.forEach((element) => {
-        let post = `<article class="post" 
+        let article = `<article class="post" 
         style=
         "background-color: rgba(156, 154, 154, 0.13);
         border-radius: 10px;
@@ -31,17 +31,90 @@ createPostHtml: function (post) {
     color: #2c3e50;">${element.dateFr}</p>
                     <img class="media" alt="photo du post" src="${element.imageUrl}" style="width: 50%;border-radius: 10px;">
                         <p class="description" style="font-weight: bold;
-    color: #2c3e50;">${element.text}</p>
+    color: #2c3e50;">${element.text}</p><div class = ‘comments’ id= ‘commentsForPost${element.id}’>
+
+<form class="comments__form" id="commentForm${element.id}">
+
+              <label for="comment${element.id}">Commentez !</label>
+
+              <input type="text" id="comment${element.id}" name = "comment${element.id}" placeholder="Votre commentaire..."/>
+
+                 
+
+              <button class="btn" type="submit">Envoyer</button>
+
+</form></div>
         </article>`;
-        articleParent.insertAdjacentHTML("beforeend", post);
-      });
+        articleParent.insertAdjacentHTML("beforeend", article);
     },
 
-  viewOnePost: function () {
-      let param = new URLSearchParams(window.location.search);
-      let idPost = param.get("id");
-      let token = JSON.parse(localStorage.getItem('token'));
-      let url = "http://localhost:3000/api/post/get/:id"+idPost;
+
+sendComment : async function (postId, content) {
+
+  try {
+
+    const res = await fetch(
+
+      "http://localhost:3000/api/post/" + postId + "/comment",
+
+      {
+
+        method: "post",
+
+        headers: {
+
+          "Content-Type": "application/json",
+
+          Authorization: "Bearer " + token,
+
+        },
+
+        body: JSON.stringify({ content }),
+
+      }
+
+    );
+
+    const json = await res.json();
+
+    if (json.error) {
+
+     console.log(json.error);
+
+    } else {
+
+    console.log(json.message);
+
+         }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+},
+addComment : function(postId){
+
+const commentFormToListen = document.getElementById("commentForm"+postId)
+
+const inputs = commentFormToListen.elements ;
+
+commentFormToListen.addEventListener("submit",(e) => {
+
+e.preventDefault() ;
+
+const content = inputs["comment"+postId];
+
+this.sendComment(postId,content)
+})
+},
+
+ viewOnePost: function () {
+      let urlId = window.location.href;
+      let idPost = urlId.split("id=")[1];
+      console.log(idPost)
+      
+      let url = "http://localhost:3000/api/post/"+ idPost;
       fetch(url,{
         method:"get",
         headers:{

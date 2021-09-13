@@ -46,7 +46,8 @@ exports.createPost = async (req, res, next) => {
   ;
 
 exports.getOne = (req, res, next) => {
-  db.Post.findOne({ where: { id: req.params.id } })
+ const id = req.params.id;
+  db.Post.findOne({ where: { id } , include:[db.Comment]})
     .then(
       (post) => {
         res.status(200).json(post)

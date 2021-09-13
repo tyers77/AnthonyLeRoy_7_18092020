@@ -35,18 +35,24 @@ const User = sequelize.define('User',{
 
 });
 User.associate = (models) => {
-    User.hasMany(models.Comment);
-    User.hasMany(models.Post);
-    /*User.hasMany(models.RateComment, {
+    User.hasMany(models.Post, {
       foreignKey: {
         allowNull: true,
       },
-      onDelete: "CASCADE",
+      onDelete: "SET NULL",
       onUpdate: "CASCADE",
-    });*/
-};
+    });
+  
+    User.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: true,
+      },
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
+    });
+}
 console.log(User === sequelize.models.User); 
 return User;
+};
 
-}
  

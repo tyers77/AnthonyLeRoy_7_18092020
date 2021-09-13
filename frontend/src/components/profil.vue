@@ -1,10 +1,13 @@
 <template>
-    <div class="profil">
-        <h2>Bienvenue sur votre profil</h2>
-        <div class="inscription">
-    <fieldset>
-      <div class="formprofil">
-        <label for="formNom">Pseudo : </label>
+<div>
+    <div id="profil">
+
+    </div>
+    <section id="feel"></section>
+    <!--<fieldset>
+      <form class="formprofil">
+        <legend > Modifier mon pseudo </legend>
+        <label for="formNom">Nouveau pseudo : </label>
         <input
           id="pseudo"
           label="nom"
@@ -13,8 +16,8 @@
           required
           class="input-group--focused"
         />
-
-        <label for="formNom">Mail : </label>
+ <legend > Modifier mon mail </legend>
+        <label for="formNom">nouveau mail : </label>
         <input
           id="email"
           label="email"
@@ -23,16 +26,9 @@
           required
           class="input-group--focused"
         />
-        <label for="media">
-            Avatar : 
-            </label>
-          <input 
-          id="media"
-          label="media"
-          type="file" 
-          accept=".jpg, .jpeg, .png"  
-          />
-        <label for="formNom">Password : </label>
+         
+           <legend > Modifier mon password </legend>
+        <label for="formNom">Nouveau password : </label>
         <input
           id="password"
           label="mot de passe"
@@ -41,12 +37,12 @@
           required
           class="input-group--focused"
         />
-      </div>
-    </fieldset></div>
+      </form>
+    </fieldset>-->
         <router-link to="/groupomania"><button>Retour</button></router-link>
-        <button class="update" >Modifier</button>
-        <router-link to="/"><button @click="deleteProfil">Supprimer</button></router-link>
-    </div>
+        <!--<button class="update" @click="updateProfil()" >Modifier</button>-->
+        <router-link to="/"><button @click="deleteProfil()">Supprimer mon compte</button></router-link>
+</div>
 </template>
 <script>
 
@@ -56,7 +52,7 @@ export default {
     return {
       email: "",
       pseudo: "",
-      media:"",
+      //avatar:null,
       password: "",
     };
 },
@@ -65,9 +61,16 @@ export default {
   },
 methods:{
 
-  createUserProfil:function(){
-
-  },
+  createPostHtml: function (post) {
+      const articleParent = document.getElementById("profil");
+      post.forEach((element) => {
+        let post = `<h2 class="titre" style="color: #2c3e50;">Bienvenue sur votre profil</h2>
+                    <h3 class="pseudo" style="color: #2c3e50;">${element.pseudo}</h3>
+                    <p>${element.email}</p>
+                    <img class="avatar" alt="photo de profil" src="${element.avatar}" style="width: 20%;border-radius: 10px;" `;
+        articleParent.insertAdjacentHTML("beforeend", post);
+      });
+    },
   
      getUser: function () {
       let token = JSON.parse(localStorage.getItem("token"));
@@ -75,14 +78,15 @@ methods:{
       fetch(url, {
         method: "get",
         headers: {
-          "content-type": "application/json",
           Authorization: "Bearer " + token,
         },
       })
         .then((response) => response.json())
+        .then((json) => {
+          this.createPostHtml(json);
+        }) 
         .catch((error) => {console.error("erreur" + error)
         });
-        
     },
     deleteProfil: function(){
       let token = JSON.parse(localStorage.getItem("token"));
@@ -90,12 +94,13 @@ methods:{
       fetch(url, {
         method: "delete",
         headers: {
-          "content-type": "application/json",
+          //"content-type": "application/json",
           Authorization: "Bearer " + token,
         },
       })
-    }
-  }
+      alert("compte supprimée");
+    },
+}
 }
 
 </script>
@@ -116,6 +121,13 @@ fieldset {
   display: grid;
   width: 100%;
 }
+legend{
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 1.2em;
+  height: 35px;
+ 
+}
 label {
   color: #2c3e50;
   font-weight: bold;
@@ -135,7 +147,7 @@ input {
 }
 
 button {
-  width: 100px;
+  //width: 100px;
   height: 30px;
   margin-top: 15px;
   margin-left: 5px;

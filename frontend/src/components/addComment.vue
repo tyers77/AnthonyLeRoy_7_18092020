@@ -2,8 +2,7 @@
     <div class="newcomment">
         <h1>Créer votre commentaire</h1>
         <fieldset>
-          
-            <!--formulaire du post-->
+            <!--formulaire du commentaire-->
             <form class="formcomment" enctype="multipart/form-data" >
             <label for="formtext"> Commentaire :</label>
                  <input
@@ -17,7 +16,7 @@
             </form>
         </fieldset>
         <router-link to="/comments"><button>Retour</button></router-link>
-        <router-link to="/groupomania"><button>Publier</button></router-link>
+        <button @click="createComment()">Publier</button>
     </div>
 </template>
 <script>
@@ -28,6 +27,31 @@ export default {
             content:""
         }
     },
+
+    methods:{
+     
+      createComment: async function(){
+        let url = "http://localhost:3000/api/comment/post";
+        let token = JSON.parse(localStorage.getItem('token'));
+        const content = document.getElementById("content").value;
+        const formData = new FormData();
+        formData.append("content",content)
+        const req = await fetch(url, {
+        method: "post",
+        headers: {
+           Authorization: "Bearer " + token,
+        },
+        body: formData,
+      })
+      const json = await req.json();
+          if(json.error){
+            alert('veuillez vérifier votre message',json.error)
+            }
+          else{ 
+          //window.location.replace("http://localhost:8080/#/groupomania"); 
+          alert("Commentaire publié")}
+      }
+    }
 }
 </script>
 <style lang="scss" scoped>
