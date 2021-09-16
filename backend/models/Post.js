@@ -1,40 +1,38 @@
-
+'use strict'; //optimisation et sécurité corrige les erreurs JS 
 module.exports = (sequelize, DataTypes) => {
-const Post = sequelize.define('Post',{
-    id:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
-        primaryKey:true,
-        autoIncrement:true
+  const Post = sequelize.define('Post', {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
- 
-    title:{
-        type:DataTypes.TEXT,
-        allowNull:false
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
-    dateFr:{
-        type:DataTypes.TEXT,
-        allowNull:false
+    dateFr: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     text: {
-        type: DataTypes.TEXT,
-        allowNull: false
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     imageUrl: {
-        type: DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true
     },
-
-});
-Post.associate = (models) => {
+  });
+  Post.associate = (models) => {
     Post.belongsTo(models.User,
-    {
-      foreignKey: {
-        allowNull: true,
-      },
-      onDelete: "SET NULL",
-      onUpdate: "CASCADE",
-    });
+      {
+        foreignKey: {
+          allowNull: true,
+        },
+        onDelete: "SET NULL",
+        onUpdate: "CASCADE",
+      });
     Post.hasMany(models.Comment, {
       foreignKey: {
         allowNull: false,
@@ -43,6 +41,5 @@ Post.associate = (models) => {
       onUpdate: "CASCADE",
     });
   };
-
   return Post;
 };
