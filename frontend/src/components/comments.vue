@@ -65,7 +65,7 @@ export default {
     color: #2c3e50;">${element.dateFr}</p>
                     <img class="media" alt="photo du post" src="${element.imageUrl}" style="width: 50%;border-radius: 10px;">
                         <p class="description" style="font-weight: bold;
-    color: #2c3e50;">${element.text}</p><button id="delete"btn type="submit" style="height: 30px;
+    color: #2c3e50;">${element.text}</p><button class="delete"btn type="submit" style="height: 30px;
   margin-top: 15px;
   margin-left: 5px;
   margin-right: 5px;
@@ -175,7 +175,7 @@ export default {
         "background-color: rgba(156, 154, 154, 0.13);
         border-radius: 10px;padding-bottom:10px;margin-top: 15px;
     padding: 5px;"><h3 class="infoComment">By ${name} le ${comment.date}</h3>
-                <p class="oneComments">${comment.content}</p><button class="btn"  type="submit" style="height: 30px;
+                <p class="oneComments">${comment.content}</p><button class="delete"  type="submit" style="height: 30px;
     margin-left: 5px;
   margin-right: 5px;
   background-color: #2c3e50;

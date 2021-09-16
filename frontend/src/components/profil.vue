@@ -32,7 +32,7 @@ export default {
   mounted() {
     this.getUser();
     this.getAllUsers();
-    /*document.getElementsById("delete").addEventListener("click", (e) => {
+    /*document.getElementsById("btn").addEventListener("click", (e) => {
       e.preventDefault();
       this.deleteProfil;
     });*/
@@ -96,7 +96,7 @@ export default {
                 if (isAdmin == 1) {
                   let list = `<h2>Liste des utilisateurs</h2>
                     <h3 class="pseudo" style="color: #2c3e50;">${element.pseudo}</h3>
-                    <p>${element.email}</p><button class="btn" type="submit" @click='deleteProfil()' style="height: 30px;
+                    <p>${element.email}</p><button id="btn" type="submit" @click='deleteProfil()' style="height: 30px;
     margin-left: 5px;
   margin-right: 5px;
   background-color: #2c3e50;
@@ -116,7 +116,7 @@ export default {
         });
     },
     deleteAccount: function() {
-      const deleteUser = document.getElementsByClassName("delete");
+      const deleteUser = document.getElementsById("btn");
       deleteUser.addEventListener("click", (e) => {
         e.preventDefault();
         this.deleteProfil();
