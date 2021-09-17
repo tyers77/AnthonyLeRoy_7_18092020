@@ -83,34 +83,7 @@ exports.viewall = (req, res, next) => {
     });
 };
 
-/* exports.delete = (req, res, next) => {
-  let paramsId = sanitize(req.params.id);
-  db.Post.findOne({ where: { id: paramsId } })
-    .then((post) => {
-      let userId = req.headers.authorization.split(" ")[1];
-      let img = post.imageUrl.split("/images/")[1];
-      if (post.id == userId) {
-        if (!post) {
-          return res.status(404).json({ error: "Post not found." });
-        }
-        fs.unlink("images/" + img, () => {
-          Post.destroy({ where: { id: paramsId } });
-          res.status(200).json({ message: "Post deleted." });
-        });
-      } else {
-        if (profil_user == 1) {
-          fs.unlink("images/" + img, () => {
-            Post.destroy({ where: { id: paramsId } });
-            res.status(200).json({ message: "Post deleted." });
-          });
-        } else {
-          res.status(403).json({ error: "Is not your post !" });
-        }
-      }
-    })
-    .catch((error) => res.status(500).json({ error }));
-};
- */
+//effacer un post
 exports.delete = async (req, res, next) => {
   try {
     let img;

@@ -64,7 +64,7 @@ export default {
       const password = document.getElementById("password").value;
       const pseudo = document.getElementById("pseudo").value;
       const regexEmail = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
-      const regexPassword = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/;
+      const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       let checkMessage = "";
       if (regexEmail.test(email) == false || this.email == "") {
         checkMessage =

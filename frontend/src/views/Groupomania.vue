@@ -67,4 +67,15 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+button {
+  height: 25px;
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #2c3e50;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+</style>

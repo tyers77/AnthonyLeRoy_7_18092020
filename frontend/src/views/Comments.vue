@@ -7,8 +7,8 @@
     <img alt="Vue logo" src="../assets/logo-home.png" />
     <post v-bind:post="post" v-bind:user="user" />
     <form @submit.prevent="sendComment()">
-      <label for="text">Commentaire</label>
-      <input type="text" id="text" />
+      <label for="text">Commentaire : </label>
+      <textarea id="text" name="text" rows="5" cols="35"> </textarea>
       <button type="submit">Ajouter le commentaire</button>
     </form>
     <comment
@@ -105,4 +105,32 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+label {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+textarea {
+  box-shadow: 0 2px 5px rgb(245, 244, 244);
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+button {
+  height: 25px;
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #2c3e50;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+</style>

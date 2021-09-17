@@ -93,7 +93,6 @@ exports.getAllUser = async (req, res) => {
 // Deleted user
 exports.delete = async (req, res, next) => {
   try {
-    //let UserId = jwt.getUserId(req);
     let UserId = req.params.id;
     let User = await db.User.findOne({ where: { id: UserId } });
     if (!User) {

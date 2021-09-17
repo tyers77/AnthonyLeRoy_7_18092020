@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="profil">
-      <h3 class="pseudo" style="color: #2c3e50;">{{ user.pseudo }}</h3>
+      <h3 class="pseudo" style="">{{ user.pseudo }}</h3>
       <p>{{ user.email }}</p>
     </div>
     <button @click="deleteProfil(user.id)">
@@ -11,13 +11,6 @@
 </template>
 <script>
 let token = JSON.parse(localStorage.getItem("token"));
-/* function getTokenInfos(token) {
-  const string64 = token.split(".")[1];
-  const stringJson = atob(string64);
-  const object = JSON.parse(stringJson);
-  return object;
-}//const isAdmin = getTokenInfos(token).admin;
- */
 
 export default {
   name: "profil",
@@ -148,6 +141,9 @@ fieldset {
   margin: 0;
   padding: 10px;
   border-radius: 10px;
+}
+h3 {
+  color: #2c3e50;
 }
 .formprofil {
   display: grid;

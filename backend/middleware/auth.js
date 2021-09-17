@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const JWT_SIGN_SECRET = "OPENCLASSROOMS_P7_Antho";
+const JWT_SIGN_SECRET = "OPENCLASSROOMS_P7_Antho"; //à placer dans .env
 /**
  * Création d'un token
  * @param {OBJECT} user

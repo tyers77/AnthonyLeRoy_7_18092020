@@ -1,15 +1,12 @@
 <template>
-    <div class="newpost">
-        <h1>Créer votre Post</h1>
-        <fieldset>
-          
-            <!--formulaire du post-->
-            <form class="formpost" enctype="multipart/form-data" >
-                
-                <label for="title">
-                        Titre :
-                </label>
-                 <input
+  <div class="newpost">
+    <h1>Créer votre Post</h1>
+    <fieldset>
+      <form class="formpost" enctype="multipart/form-data">
+        <label for="title">
+          Titre :
+        </label>
+        <input
           id="title"
           label="title"
           v-model="title"
@@ -18,21 +15,19 @@
           class="input-group--focused"
         />
         <label for="imageUrl">
-            Image : 
-            </label>
-          <input 
-          
+          Image :
+        </label>
+        <input
           id="imageUrl"
           label="imageUrl"
           ref="file"
           type="file"
-          accept=".jpg,.jpeg,.png" 
-          
-          />
-               <label for="formtext">
-                        Commentaire :
-                </label>
-                 <input
+          accept=".jpg,.jpeg,.png"
+        />
+        <label for="formtext">
+          Commentaire :
+        </label>
+        <input
           id="text"
           label="text"
           v-model="text"
@@ -40,70 +35,64 @@
           required
           class="input-group--focused"
         />
-            </form>
-        </fieldset>
-        <router-link to="/groupomania"><button>Retour</button></router-link>
-        <button @click="createPost()">Poster</button>
-    </div>
+      </form>
+    </fieldset>
+    <router-link to="/groupomania"><button>Retour</button></router-link>
+    <button @click="createPost()">Poster</button>
+  </div>
 </template>
 <script>
 let url = "http://localhost:3000/api/post/create";
-//import { authHeader } from '@/helpers/auth.js';
 export default {
-    name:"newpost",
-    data: function (){
-        return {
-            title:"",
-            imageUrl:null,
-            text:""
-        }
-    },
-   
-    methods: {
-      
-        //fetch post des posts
-    createPost: async function () {
-      let token = JSON.parse(localStorage.getItem('token'));
+  name: "newpost",
+  data: function() {
+    return {
+      title: "",
+      imageUrl: null,
+      text: "",
+    };
+  },
+
+  methods: {
+    //fetch post des posts
+    createPost: async function() {
+      let token = JSON.parse(localStorage.getItem("token"));
       const title = document.getElementById("title").value;
       const imageUrl = document.getElementById("imageUrl");
       const text = document.getElementById("text").value;
-     const imgUrl = imageUrl.files[0];
+      const imgUrl = imageUrl.files[0];
       console.log(imgUrl);
       const formData = new FormData();
-    if(imageUrl){
-      const file = imageUrl.files[0];
-      formData.append("image",file);
-      formData.append("title",title)
-      formData.append("text",text)
-    }else{
-    formData.append("title",title)
-    formData.append("text",text)
-    }
+      if (imageUrl) {
+        const file = imageUrl.files[0];
+        formData.append("image", file);
+        formData.append("title", title);
+        formData.append("text", text);
+      } else {
+        formData.append("title", title);
+        formData.append("text", text);
+      }
       const req = await fetch(url, {
         method: "post",
         headers: {
-           Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         body: formData,
-      })
+      });
       const json = await req.json();
-          if(json.error){
-            alert('veuillez vérifier vos informations',json.error)
-            console.log("Veuillez vérifier vos informations ")}
-            
-          else{ 
-          window.location.replace("http://localhost:8080/#/groupomania"); 
-          alert("Post publié")}
-    }
-},
-
-  
-
-}
+      if (json.error) {
+        alert("veuillez vérifier vos informations", json.error);
+        console.log("Veuillez vérifier vos informations ");
+      } else {
+        window.location.replace("http://localhost:8080/#/groupomania");
+        alert("Post publié");
+      }
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-
-.newpost{
+.newpost {
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
@@ -111,7 +100,7 @@ export default {
 
 fieldset {
   background-color: rgba(156, 154, 154, 0.13);
-  
+
   margin: 0;
   padding: 10px;
   border-radius: 10px;
@@ -132,11 +121,11 @@ input {
   height: 35px;
   margin-bottom: 10px;
   border-radius: 10px;
-  }
-    #text{
-      height: 200px;  
 }
-#imageUrl{
+#text {
+  height: 200px;
+}
+#imageUrl {
   padding-left: 7px;
 }
 

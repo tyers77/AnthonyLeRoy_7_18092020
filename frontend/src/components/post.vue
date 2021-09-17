@@ -1,21 +1,12 @@
 <template>
-  <article
-    class="post"
-    style="background-color: rgba(156, 154, 154, 0.13);
-        border-radius: 10px;padding-bottom:15px;
-                "
-  >
-    <h2 v-if="post.User" class="titre" style="color: #2c3e50;">
+  <article class="post">
+    <h2 v-if="post.User" class="titre">
       {{ post.title }} by {{ post.User.pseudo }}
     </h2>
-    <h2 v-if="!post.User" class="titre" style="color: #2c3e50;">
+    <h2 v-if="!post.User" class="titre">
       {{ post.title }} by utilisateur supprimé
     </h2>
-    <p
-      class="postdate"
-      style="font-weight: bold;
-    color: #2c3e50;"
-    >
+    <p class="postdate">
       {{ post.dateFr }}
     </p>
     <img
@@ -23,21 +14,12 @@
       class="media"
       alt="photo du post"
       v-bind:src="post.imageUrl"
-      style="width: 50%;border-radius: 10px;"
+      style=""
     />
-    <p
-      class="description"
-      style="font-weight: bold;
-    color: #2c3e50;"
-    >
+    <p class="description">
       {{ post.text }}
     </p>
-    <button
-      @click="goToPost(post.id)"
-      style="background-color:#cbd0d4;
-        border-radius: 10px; padding:5px;text-decoration:none;
-                "
-    >
+    <button @click="goToPost(post.id)">
       Voir les commentaires
     </button>
     <button
@@ -78,3 +60,31 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+article {
+  background-color: rgba(156, 154, 154, 0.13);
+  border-radius: 10px;
+  padding-bottom: 15px;
+}
+h2 {
+  color: #2c3e50;
+}
+p {
+  font-weight: bold;
+  color: #2c3e50;
+}
+img {
+  width: 50%;
+  border-radius: 10px;
+}
+button {
+  height: 25px;
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #2c3e50;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+</style>

@@ -8,7 +8,7 @@
     </div>
     <div class="userProfil" v-if="user.isAdmin">
       <h2>
-        Liste des utilisateurs
+        Liste des utilisateurs :
       </h2>
       <profil v-for="user in users" :key="user + user.id" v-bind:user="user" />
     </div>
