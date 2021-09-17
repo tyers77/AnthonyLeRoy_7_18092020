@@ -60,22 +60,28 @@ export default {
   methods: {
     checkForm: function() {
       console.log("checkfrom");
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const pseudo = document.getElementById("pseudo").value;
       const regexEmail = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
+      const regexPassword = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/;
       let checkMessage = "";
-      if (regexEmail.test(this.email) == false || this.email == "") {
+      if (regexEmail.test(email) == false || this.email == "") {
         checkMessage =
           checkMessage +
           "Veuillez vérifier les informations concernant votre mail.";
       } else {
         console.log("email vérifié");
       }
-      if (this.pseudo == "") {
+      if (pseudo == "") {
         checkMessage = checkMessage + "Veuillez créer votre pseudo.";
       } else {
         console.log("pseudo vérifié");
       }
-      if (this.password == "") {
-        checkMessage = checkMessage + "Veuillez créer un mot de passe.";
+      if (regexPassword.test(password) == false || this.password == "") {
+        checkMessage =
+          checkMessage +
+          "Veuillez créer un mot de passe avec 8 caractères et au moins 1 lettre et 1 chiffre";
       } else {
         console.log("password vérifié");
       }

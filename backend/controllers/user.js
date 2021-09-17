@@ -61,12 +61,13 @@ exports.login = async (req, res, next) => {
 exports.searchUser = (req, res, next) => {
   let id = jwt.getUserId(req);
   db.User.findOne({
-    attributes: ["pseudo", "email", "id"],
+    attributes: ["pseudo", "email", "id", "isAdmin"],
     where: {
       id: id,
     },
   })
-    .then((user) => res.status(200).json([user]))
+    .then((user) => res.status(200).json(user))
+
     .catch((error) => res.status(400).json({ error: error.message }));
 };
 
@@ -78,9 +79,10 @@ exports.getAllUser = async (req, res) => {
   }
   db.User.findAll({
     order: [["id", "DESC"]],
-    attributes: ["pseudo", "email"],
+    attributes: ["pseudo", "email", "id"],
   })
     .then((jsonUsers) => {
+      console.log(jsonUsers);
       res.status(200).json(jsonUsers);
     })
     .catch((error) => {
@@ -91,7 +93,8 @@ exports.getAllUser = async (req, res) => {
 // Deleted user
 exports.delete = async (req, res, next) => {
   try {
-    let UserId = jwt.getUserId(req);
+    //let UserId = jwt.getUserId(req);
+    let UserId = req.params.id;
     let User = await db.User.findOne({ where: { id: UserId } });
     if (!User) {
       return res.status(404).json({ error: "utilisateur inexistant" });
@@ -108,7 +111,6 @@ exports.delete = async (req, res, next) => {
         .status(200)
         .json({ message: "compte supprimé par l'administarteur" });
     }
-
     return res
       .status(403)
       .json({ error: "vous n'êtes pas autorisé a supprimé ce compte" });

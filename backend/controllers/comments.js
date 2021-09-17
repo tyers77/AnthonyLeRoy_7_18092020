@@ -42,3 +42,32 @@ exports.createComment = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+exports.delete = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const UserId = jwt.getUserId(req);
+    const comment = await db.Comment.findOne({ where: { id: commentId } });
+    if (!comment) {
+      return res.status(404).json({ error: "commentaire introuvable" });
+    }
+    if (comment.UserId == UserId) {
+      await comment.destroy();
+      return res
+        .status(200)
+        .json({ message: "commentaire supprimé par l'utilisateur" });
+    }
+    const user = await db.User.findOne({ where: { id: UserId } });
+    if (!user) {
+      return res.status(404).json({ error: "utilisateur introuvable" });
+    }
+    if (user.isAdmin) {
+      await comment.destroy();
+      return res
+        .status(200)
+        .json({ message: "commentaire supprimé par l'administrateur" });
+    }
+    return res.status(403).json({ error: "vous n'êtes pas autorisé " });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};

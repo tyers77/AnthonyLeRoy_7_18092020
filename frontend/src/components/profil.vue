@@ -1,45 +1,47 @@
 <template>
   <div>
-    <div id="profil"></div>
-    <section id="feel"></section>
-    <router-link to="/groupomania"><button>Retour</button></router-link>
-    <router-link to="/"
-      ><button @click="deleteProfil()">
-        Supprimer mon compte
-      </button></router-link
-    >
-    <section id="usersList"></section>
+    <div id="profil">
+      <h3 class="pseudo" style="color: #2c3e50;">{{ user.pseudo }}</h3>
+      <p>{{ user.email }}</p>
+    </div>
+    <button @click="deleteProfil(user.id)">
+      Supprimer le profil
+    </button>
   </div>
 </template>
 <script>
 let token = JSON.parse(localStorage.getItem("token"));
-function getTokenInfos(token) {
+/* function getTokenInfos(token) {
   const string64 = token.split(".")[1];
   const stringJson = atob(string64);
   const object = JSON.parse(stringJson);
   return object;
-}
-const isAdmin = getTokenInfos(token).admin;
+}//const isAdmin = getTokenInfos(token).admin;
+ */
+
 export default {
   name: "profil",
-  data: function() {
-    return {
-      email: "",
-      pseudo: "",
-      password: "",
-    };
+  props: {
+    user: Object,
   },
-  mounted() {
-    this.getUser();
-    this.getAllUsers();
-    /*document.getElementsById("btn").addEventListener("click", (e) => {
-      e.preventDefault();
-      this.deleteProfil;
-    });*/
+  data: function() {
+    return {};
   },
 
   methods: {
-    createPostHtml: function(post) {
+    deleteProfil: function(UserId) {
+      let url = "http://localhost:3000/api/user/delete/" + UserId;
+      fetch(url, {
+        method: "delete",
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+      // window.location.reload();
+      alert("compte supprimée");
+    },
+    /*     createPostHtml: function(post) {
       const articleParent = document.getElementById("profil");
       post.forEach((element) => {
         let post = `<h2 class="titre" style="color: #2c3e50;">Bienvenue sur votre profil</h2>
@@ -49,9 +51,9 @@ export default {
         articleParent.insertAdjacentHTML("beforeend", post);
       });
     },
-
-    getUser: function() {
-      let url = "http://localhost:3000/api/user/get/:id";
+ */
+    /* getUser: function() {
+      let url = "http://localhost:3000/api/user/getOne";
       fetch(url, {
         method: "get",
         headers: {
@@ -60,15 +62,18 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
-          this.createPostHtml(json);
+          this.pseudo = json.pseudo;
+          this.email = json.email;
+          this.id = json.id;
+          //this.createPostHtml(json);
         })
         .catch((error) => {
           console.error("erreur" + error);
         });
-    },
+    }, */
 
-    getAllUsers: function() {
-      let url = "http://localhost:3000/api/user/get";
+    /*     getAllUsers: function() {
+      let url = "http://localhost:3000/api/user/getAll";
       fetch(url, {
         method: "GET",
         headers: {
@@ -96,7 +101,7 @@ export default {
                 if (isAdmin == 1) {
                   let list = `<h2>Liste des utilisateurs</h2>
                     <h3 class="pseudo" style="color: #2c3e50;">${element.pseudo}</h3>
-                    <p>${element.email}</p><button id="btn" type="submit" @click='deleteProfil()' style="height: 30px;
+                    <p>${element.email}</p><button @click='deleteProfil(${element.id})' style="height: 30px;
     margin-left: 5px;
   margin-right: 5px;
   background-color: #2c3e50;
@@ -106,6 +111,12 @@ export default {
                     `;
 
                   articleParent.insertAdjacentHTML("beforeend", list);
+                  /*             document
+                    .getElementsById("btn")
+                    .addEventListener("click", (e) => {
+                      e.preventDefault();
+                      this.deleteProfil;
+                    }); 
                 }
               });
             }
@@ -114,27 +125,14 @@ export default {
         .catch((error) => {
           console.error("erreur" + error);
         });
-    },
-    deleteAccount: function() {
+    }, */
+    /* deleteAccount: function() {
       const deleteUser = document.getElementsById("btn");
       deleteUser.addEventListener("click", (e) => {
         e.preventDefault();
         this.deleteProfil();
       });
-    },
-    deleteProfil: function() {
-      let token = JSON.parse(localStorage.getItem("token"));
-      let url = "http://localhost:3000/api/user/delete/:id";
-      fetch(url, {
-        method: "delete",
-        headers: {
-          "content-type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-      window.location.reload();
-      alert("compte supprimée");
-    },
+    }, */
   },
 };
 </script>

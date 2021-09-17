@@ -46,7 +46,7 @@ exports.createPost = async (req, res, next) => {
 };
 
 exports.getOne = (req, res, next) => {
-  const id = sanitize(req.params.id);
+  const id = req.params.id;
   db.Post.findOne({
     where: { id },
     include: [
@@ -113,32 +113,40 @@ exports.viewall = (req, res, next) => {
  */
 exports.delete = async (req, res, next) => {
   try {
-    let UserId = sanitize(req.body.userId);
-    let PostId = sanitize(req.body.PostId);
-    let file = sanitize(req.body.imageUrl);
-    let User = await db.User.findOne({ where: { UserId } });
+    let img;
+    let UserId = jwt.getUserId(req);
+    let PostId = req.params.id;
+    let User = await db.User.findOne({ where: { id: UserId } });
+    console.log(User);
     if (!User) {
       return res.status(404).json({ error: "utilisateur inexistant" });
     }
-    let Post = await db.Post.findOne({ where: { PostId } });
+    let Post = await db.Post.findOne({ where: { id: PostId } });
     if (!Post) {
       return res.status(404).json({ error: "post inexistant" });
     }
+    if (Post.imageUrl) {
+      img = Post.imageUrl.split("/images/")[1];
+    }
     if (User.isAdmin) {
-      fs.unlink("images/" + img, () => {});
+      if (img) {
+        fs.unlink("images/" + img, () => {});
+      }
       await Post.destroy();
       return res
         .status(200)
-        .json({ message: "compte supprimé par l'administarteur" });
+        .json({ message: "post supprimé par l'administrateur" });
     }
-    if (User.id == Post.id) {
-      fs.unlink("images/" + img, () => {});
+    if (User.id == Post.UserId) {
+      if (img) {
+        fs.unlink("images/" + img, () => {});
+      }
       await Post.destroy();
       return res.status(200).json({ message: "Post supprimé par l'auteur" });
     }
     return res
       .status(403)
-      .json({ error: "vous n'êtes pas autorisé a supprimé ce compte" });
+      .json({ error: "vous n'êtes pas autorisé a supprimé ce post" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
