@@ -10,7 +10,7 @@ instruction de lancement de l'application :
 
 FRONTEND :
 
-Clônez le repository sur GITHUB avec le lien suivant :
+Clônez le repository sur GITHUB avec le lien suivant : https://github.com/tyers77/AnthonyLeRoy_7_18092020.git
 
 Ouvrez votre éditeur de code et votre terminal.
 
