@@ -137,7 +137,7 @@ form {
   width: 100%;
 }
 label {
-  color: #2c3e50;
+  color: black;
   font-weight: bold;
   font-size: 1.2em;
   height: 35px;
@@ -158,7 +158,7 @@ button {
   margin-top: 15px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: #2c3e50;
+  background-color: black;
   color: #fff;
   font-size: 1.2em;
   border-radius: 10px;

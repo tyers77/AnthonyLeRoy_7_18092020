@@ -2,6 +2,7 @@
   <div class="profil">
     <navBar2 id="nav" />
     <img alt="Vue logo" src="../assets/logo-home.png" />
+
     <div class="profil">
       <h2 class="titre" style="color: #2c3e50;">Votre profil</h2>
       <profil v-bind:user="user" />
@@ -12,6 +13,10 @@
       </h2>
       <profil v-for="user in users" :key="user + user.id" v-bind:user="user" />
     </div>
+    <div class="btnBack">
+      <router-link to="/groupomania"><button>Retour</button></router-link>
+    </div>
+    <img alt="Vue logo" src="../assets/logofooter.png" />
   </div>
 </template>
 <script>
@@ -68,9 +73,21 @@ export default {
         },
       });
       const json = await res.json();
-      console.log("coucou", json);
       return json;
     },
   },
 };
 </script>
+<style lang="scss" scoped>
+button {
+  width: 100px;
+  height: 25px;
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: black;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 10px;
+}
+</style>

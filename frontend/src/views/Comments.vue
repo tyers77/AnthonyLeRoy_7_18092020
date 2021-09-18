@@ -17,6 +17,7 @@
       v-bind:comment="comment"
       v-bind:user="user"
     />
+    <img alt="Vue logo" src="../assets/logofooter.png" />
   </div>
 </template>
 <script>
@@ -116,7 +117,7 @@ form {
 label {
   font-size: 1.2em;
   font-weight: bold;
-  color: #2c3e50;
+  color: black;
 }
 textarea {
   box-shadow: 0 2px 5px rgb(245, 244, 244);
@@ -128,7 +129,7 @@ button {
   margin-top: 15px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: #2c3e50;
+  background-color: black;
   color: #fff;
   font-size: 1.2em;
   border-radius: 10px;

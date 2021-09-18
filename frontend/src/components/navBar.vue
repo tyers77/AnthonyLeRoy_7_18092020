@@ -17,10 +17,10 @@ export default {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: black;
 
     &.router-link-exact-active {
-      color: #2c3e50;
+      color: black;
     }
     &:hover {
       color: #fd2800;

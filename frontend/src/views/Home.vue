@@ -1,44 +1,52 @@
 <template>
   <div class="home">
-    <navBar id="nav"/>
+    <navBar id="nav" />
     <img alt="Vue logo" src="../assets/logo-home.png" />
     <h1>Bienvenue sur le réseau social de votre entreprise</h1>
     <ul>
-      <li><router-link to="/inscription"><button>Inscription</button></router-link></li>
-      <li><router-link to="/connexion"><button>Connexion</button></router-link></li>
+      <li>
+        <router-link to="/inscription"
+          ><button>Inscription</button></router-link
+        >
+      </li>
+      <li>
+        <router-link to="/connexion"><button>Connexion</button></router-link>
+      </li>
     </ul>
     <router-view />
+    <img alt="Vue logo" src="../assets/logofooter.png" />
   </div>
 </template>
 
 <script>
-import navBar from '@/components/navBar.vue'
+import navBar from "@/components/navBar.vue";
+
 export default {
-  name: 'Home',
-  components:{
+  name: "Home",
+  components: {
     navBar,
-  }
-}
+  },
+};
 </script>
 <style lang="scss" scoped>
-ul{
+ul {
   display: flex;
   justify-content: space-evenly;
   list-style: none;
   padding: 0px;
-  li{
+  li {
     margin-right: 2px;
     margin-left: 2px;
   }
 }
-  button{
+button {
   width: 100%;
-    width: 150px;
-    height: 50px;
-    margin-top: 15px;
-    background-color:#2c3e50 ;
-    color: #fff;
-    font-size: 1.6em;
-    border-radius: 15px;
-  }
+  width: 150px;
+  height: 50px;
+  margin-top: 15px;
+  background-color: black;
+  color: #fff;
+  font-size: 1.6em;
+  border-radius: 15px;
+}
 </style>

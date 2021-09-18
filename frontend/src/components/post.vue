@@ -67,11 +67,11 @@ article {
   padding-bottom: 15px;
 }
 h2 {
-  color: #2c3e50;
+  color: black;
 }
 p {
   font-weight: bold;
-  color: #2c3e50;
+  color: black;
 }
 img {
   width: 50%;
@@ -82,7 +82,7 @@ button {
   margin-top: 15px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: #2c3e50;
+  background-color: black;
   color: #fff;
   font-size: 1.2em;
   border-radius: 10px;

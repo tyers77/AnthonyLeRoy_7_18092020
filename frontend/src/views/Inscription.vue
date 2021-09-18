@@ -1,30 +1,27 @@
-<template> 
-    <div class="inscription">
-    <navBar id="nav"/>
+<template>
+  <div class="inscription">
+    <navBar id="nav" />
     <img alt="Vue logo" src="../assets/logo-home.png" />
-    <Signup/>
-    <router-view/>
-    </div>
+    <Signup />
+    <router-view />
+    <img alt="Vue logo" src="../assets/logofooter.png" />
+  </div>
 </template>
 <script>
-import navBar from '@/components/navBar.vue'
-import Signup from '../components/signup.vue'
+import navBar from "@/components/navBar.vue";
+import Signup from "../components/signup.vue";
 export default {
-  name: 'Inscription',
-  components:{
+  name: "Inscription",
+  components: {
     navBar,
-    Signup
-    
-  }
-}
+    Signup,
+  },
+};
 </script>
 <style lang="scss" scoped>
-
-.inscription{
- 
+.inscription {
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
-    
 }
 </style>

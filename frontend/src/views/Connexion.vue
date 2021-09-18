@@ -1,30 +1,27 @@
-<template> 
-    <div class="connexion">
-    <navBar id="nav"/>
+<template>
+  <div class="connexion">
+    <navBar id="nav" />
     <img alt="Vue logo" src="../assets/logo-home.png" />
-    <Login/>
-    <router-view/>
-    </div>
+    <Login />
+    <router-view />
+    <img alt="Vue logo" src="../assets/logofooter.png" />
+  </div>
 </template>
 <script>
-import navBar from '@/components/navBar.vue'
-import Login from '../components/login.vue'
+import navBar from "@/components/navBar.vue";
+import Login from "../components/login.vue";
 export default {
-  name: 'Connexion',
-  components:{
+  name: "Connexion",
+  components: {
     navBar,
-    Login
-    
-  }
-}
+    Login,
+  },
+};
 </script>
 <style lang="scss" scoped>
-
-.connexion{
- 
+.connexion {
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
-    
 }
 </style>
